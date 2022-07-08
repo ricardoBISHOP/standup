@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 
 function mix() {
   return [
@@ -21,13 +21,10 @@ const __dirname = path.dirname(__filename);
 const checksum = path.resolve(__dirname, "./check-sum.txt");
 
 let folks = mix();
-while (
-  fs.readFileSync(checksum).toString() ==
-  folks.join("")
-) {
+while (fs.readFileSync(checksum, { flag: "a+" }).toString() == folks.join("")) {
   folks = mix();
 }
 
-fs.writeFileSync(checksum, folks.join(""));
+fs.writeFileSync(checksum, folks.join(""), { flag: "w+" });
 
 folks.forEach((dude) => console.log(dude));
